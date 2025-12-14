@@ -1,0 +1,8 @@
+{
+  "welcome_message": "Welcome to the Student Performance Analyzer!",
+  "report_title": "Academic Performance Report",
+  "risk_high": "HIGH RISK of academic failure - immediate intervention required",
+  "risk_medium": "MEDIUM RISK - additional support recommended",
+  "risk_low": "LOW RISK - good academic standing",
+  "recommendation_header": "Recommended study materials:"
+}

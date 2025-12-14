@@ -1,0 +1,10 @@
+{
+  "Math": [
+    {"title": "Algebra Basics", "url": "https://example.com/math1", "difficulty": "beginner"},
+    {"title": "Calculus Fundamentals", "url": "https://example.com/math2", "difficulty": "intermediate"}
+  ],
+  "Physics": [
+    {"title": "Newton's Laws", "url": "https://example.com/physics1", "difficulty": "beginner"},
+    {"title": "Quantum Mechanics Intro", "url": "https://example.com/physics2", "difficulty": "advanced"}
+  ]
+}

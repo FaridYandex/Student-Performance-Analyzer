@@ -1,0 +1,38 @@
+name: Daily Report
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Ежедневно в 00:00 UTC
+  workflow_dispatch:     # Возможность ручного запуска
+
+jobs:
+  generate-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: Generate Report
+        env:
+          APP_LANGUAGE: ru  # Генерируем отчет на русском
+        run: |
+          mkdir -p docs
+          python scripts/generate_daily_report.py
+      
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          keep_files: true

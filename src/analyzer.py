@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 from typing import Dict, Any
 
 def analyze_student_performance(df: pd.DataFrame, student_id: int) -> Dict[str, Any]:
@@ -46,3 +45,4 @@ def get_class_statistics(df: pd.DataFrame) -> Dict[str, Any]:
             )['student_id'].unique())
         }
     }
+    

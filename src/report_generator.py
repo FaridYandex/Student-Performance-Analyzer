@@ -111,3 +111,4 @@ def _generate_grade_chart(df: pd.DataFrame, student_id: int, avg_grade: float):
     plt.tight_layout()
     plt.savefig('docs/grade_chart.png')
     plt.close()
+    

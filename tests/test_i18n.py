@@ -20,3 +20,4 @@ def test_load_translations():
     assert "en" in translations
     assert "ru" in translations
     assert "welcome_message" in translations["en"]
+    

@@ -24,3 +24,4 @@ def validate_data(df: pd.DataFrame):
     
     if df['attendance'].min() < 0 or df['attendance'].max() > 100:
         raise ValueError("Посещаемость должна быть в диапазоне 0-100%")
+        

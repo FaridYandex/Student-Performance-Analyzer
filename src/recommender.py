@@ -1,4 +1,5 @@
 import json
+import os
 from typing import List, Dict
 
 def load_curriculum() -> Dict[str, List[Dict]]:
@@ -27,4 +28,3 @@ def generate_recommendations(weak_subjects: List[str], avg_grade: float) -> List
             recommendations.extend(recs[:2])  # Берем максимум 2 рекомендации на предмет
     
     return recommendations
-    

@@ -1,4 +1,5 @@
 import json
+import os
 from typing import Dict
 
 # Глобальная переменная для языка
@@ -29,4 +30,3 @@ def get_text(key: str) -> str:
         return f"[{_current_language}]{key}"
     
     return _translations[_current_language].get(key, f"[MISSING:{key}]")
-    

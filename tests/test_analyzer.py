@@ -1,5 +1,7 @@
 import pandas as pd
+import pytest
 from src.analyzer import analyze_student_performance, get_class_statistics
+from src.data_loader import load_data
 
 def test_analyze_student_performance():
     """Тест анализа успеваемости для студента"""
@@ -33,4 +35,3 @@ def test_get_class_statistics():
     assert 50 < stats['average_class_grade'] < 70
     assert len(stats['subjects']) == 2
     assert stats['risk_distribution']['high'] >= 1  # Студент 3 имеет низкие оценки
-    

@@ -13,7 +13,7 @@ def analyze_student_performance(df: pd.DataFrame, student_id: int) -> Dict[str, 
     avg_attendance = student_data["attendance"].mean()
 
     # Определяем слабые предметы (оценка < 70)
-    weak_subjects = student_data[student_data["grade"] < 70]["subject"].tolist()
+    weak_subjects = student_data[student_data["grade"] <= 70]["subject"].tolist()
 
     # Прогноз риска отчисления (простая эвристика)
     risk_score = (100 - avg_grade) * 0.6 + (100 - avg_attendance) * 0.4
@@ -31,38 +31,20 @@ def analyze_student_performance(df: pd.DataFrame, student_id: int) -> Dict[str, 
 
 def get_class_statistics(df: pd.DataFrame) -> Dict[str, Any]:
     """Статистика по всему классу"""
+    students = df["student_id"].unique()
+    analyses = [analyze_student_performance(df, sid) for sid in students]
+    
+    high_risk = sum(1 for a in analyses if a["risk_level"] == "high")
+    medium_risk = sum(1 for a in analyses if a["risk_level"] == "medium")
+    low_risk = sum(1 for a in analyses if a["risk_level"] == "low")
+    
     return {
-        "total_students": df["student_id"].nunique(),
+        "total_students": len(students),
         "average_class_grade": round(df["grade"].mean(), 2),
         "subjects": df["subject"].unique().tolist(),
         "risk_distribution": {
-            "high": len(
-                df.groupby("student_id")
-                .filter(
-                    lambda x: (100 - x["grade"].mean()) * 0.6
-                    + (100 - x["attendance"].mean()) * 0.4
-                    > 60
-                )["student_id"]
-                .unique()
-            ),
-            "medium": len(
-                df.groupby("student_id")
-                .filter(
-                    lambda x: 30
-                    < (100 - x["grade"].mean()) * 0.6
-                    + (100 - x["attendance"].mean()) * 0.4
-                    <= 60
-                )["student_id"]
-                .unique()
-            ),
-            "low": len(
-                df.groupby("student_id")
-                .filter(
-                    lambda x: (100 - x["grade"].mean()) * 0.6
-                    + (100 - x["attendance"].mean()) * 0.4
-                    <= 30
-                )["student_id"]
-                .unique()
-            ),
+            "high": high_risk,
+            "medium": medium_risk,
+            "low": low_risk,
         },
     }

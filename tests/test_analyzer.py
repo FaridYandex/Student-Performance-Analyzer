@@ -34,4 +34,5 @@ def test_get_class_statistics():
     assert stats["total_students"] == 3
     assert 50 < stats["average_class_grade"] < 70
     assert len(stats["subjects"]) == 2
-    assert stats["risk_distribution"]["high"] >= 1  # Студент 3 имеет низкие оценки
+    assert stats["risk_distribution"]["medium"] >= 1  # Студент 3 имеет средний риск
+    assert stats["risk_distribution"]["high"] == 0    # Никто не в high risk

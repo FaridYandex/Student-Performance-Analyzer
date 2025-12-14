@@ -32,7 +32,9 @@ jobs:
       
       - name: Run Unit Tests
         run: |
-          pytest tests/ --cov=src --cov-report=xml
+          python -m pytest tests/ --cov=src --cov-report=xml
+        env:
+          PYTHONPATH: .
       
       - name: Upload Coverage
         uses: codecov/codecov-action@v3

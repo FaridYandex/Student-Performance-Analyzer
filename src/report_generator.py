@@ -21,9 +21,9 @@ def generate_student_report(
 
     template = Template(
         "<!DOCTYPE html>\n"
-        "<html lang=\"ru\">\n"
+        '<html lang="ru">\n'
         "<head>\n"
-        "    <meta charset=\"UTF-8\">\n"
+        '    <meta charset="UTF-8">\n'
         "    <title>Отчет по успеваемости</title>\n"
         "    <style>\n"
         "        body { font-family: Arial, sans-serif; margin: 40px; }\n"
@@ -40,9 +40,9 @@ def generate_student_report(
         "    <p><strong>Студент ID:</strong> {{ student_id }}</p>\n"
         "    <p><strong>Средний балл:</strong> {{ average_grade }} / 100</p>\n"
         "    <p><strong>Посещаемость:</strong> {{ attendance }}%</p>\n"
-        "    <div class=\"chart\">\n"
-        "        <img src=\"grade_chart.png\" alt=\"График успеваемости\" "
-        "width=\"600\">\n"
+        '    <div class="chart">\n'
+        '        <img src="grade_chart.png" alt="График успеваемости" '
+        'width="600">\n'
         "    </div>\n"
         "    <h2>Слабые предметы:</h2>\n"
         "    <ul>\n"
@@ -51,12 +51,12 @@ def generate_student_report(
         "        {% endfor %}\n"
         "    </ul>\n"
         "    <h2>Уровень риска отчисления:</h2>\n"
-        "    <p class=\"risk-{{ risk_level }}\">{{ risk_text }}</p>\n"
-        "    <div class=\"recommendations\">\n"
+        '    <p class="risk-{{ risk_level }}">{{ risk_text }}</p>\n'
+        '    <div class="recommendations">\n'
         "        <h2>Рекомендуемые материалы:</h2>\n"
         "        <ul>\n"
         "            {% for rec in recommendations %}\n"
-        "                <li><a href=\"{{ rec.url }}\" target=\"_blank\">"
+        '                <li><a href="{{ rec.url }}" target="_blank">'
         "{{ rec.title }}</a> (Сложность: {{ rec.difficulty }})</li>\n"
         "            {% endfor %}\n"
         "        </ul>\n"

@@ -33,18 +33,17 @@ def get_class_statistics(df: pd.DataFrame) -> Dict[str, Any]:
     """Статистика по всему классу"""
     students = df["student_id"].unique()
     analyses = [analyze_student_performance(df, sid) for sid in students]
-    
-    high_risk = sum(1 for a in analyses if a["risk_level"] == "high")
-    medium_risk = sum(1 for a in analyses if a["risk_level"] == "medium")
-    low_risk = sum(1 for a in analyses if a["risk_level"] == "low")
-    
+    highRisk = sum(1 for a in analyses if a["risk_level"] == "high")
+    mediumRisk = sum(1 for a in analyses if a["risk_level"] == "medium")
+    lowRisk = sum(1 for a in analyses if a["risk_level"] == "low")
+  
     return {
         "total_students": len(students),
         "average_class_grade": round(df["grade"].mean(), 2),
         "subjects": df["subject"].unique().tolist(),
         "risk_distribution": {
-            "high": high_risk,
-            "medium": medium_risk,
-            "low": low_risk,
+            "high": highRisk,
+            "medium": mediumRisk,
+            "low": lowRisk,
         },
     }

@@ -1,36 +1,24 @@
-import json
-import os
-from typing import Dict
-
-# Глобальная переменная для языка
-_current_language = os.getenv("APP_LANGUAGE", "en")
+from src.utils.i18n import set_language, get_text, _load_translations
 
 
-def set_language(lang: str):
-    """Устанавливает текущий язык"""
-    global _current_language
-    if lang not in ["en", "ru"]:
-        raise ValueError("Поддерживаемые языки: en, ru")
-    _current_language = lang
+def test_language_switching():
+    """Тест переключения языков"""
+    set_language("en")
+    assert get_text("welcome_message") == (
+        "Welcome to the Student Performance Analyzer!"
+    )
+
+    set_language("ru")
+    assert get_text("welcome_message") == (
+        "Добро пожаловать в систему анализа успеваемости!"
+    )
+
+    assert "MISSING" in get_text("non_existent_key")
 
 
-def _load_translations() -> Dict[str, Dict]:
-    """Загружает все переводы"""
-    translations = {}
-    for lang in ["en", "ru"]:
-        file_path = f"locales/{lang}.json"
-        if os.path.exists(file_path):
-            with open(file_path, "r", encoding="utf-8") as f:
-                translations[lang] = json.load(f)
-    return translations
-
-
-_translations = _load_translations()
-
-
-def get_text(key: str) -> str:
-    """Получает текст на текущем языке"""
-    if _current_language not in _translations:
-        return f"[{_current_language}]{key}"
-
-    return _translations[_current_language].get(key, f"[MISSING:{key}]")
+def test_load_translations():
+    """Тест загрузки переводов"""
+    translations = _load_translations()
+    assert "en" in translations
+    assert "ru" in translations
+    assert "welcome_message" in translations["en"]

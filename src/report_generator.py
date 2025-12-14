@@ -6,18 +6,24 @@ from .analyzer import analyze_student_performance, get_class_statistics
 from .recommender import generate_recommendations
 from .utils.i18n import get_text
 
-def generate_student_report(df: pd.DataFrame, student_id: int, output_path: str = "docs/report.html"):
+
+def generate_student_report(
+    df: pd.DataFrame, student_id: int, output_path: str = "docs/report.html"
+):
     """Генерирует HTML-отчет для студента"""
     # Анализ данных
     performance = analyze_student_performance(df, student_id)
-    recommendations = generate_recommendations(performance['weak_subjects'], performance['average_grade'])
+    recommendations = generate_recommendations(
+        performance["weak_subjects"], performance["average_grade"]
+    )
     class_stats = get_class_statistics(df)
-    
+
     # Генерация графиков
-    _generate_grade_chart(df, student_id, performance['average_grade'])
-    
+    _generate_grade_chart(df, student_id, performance["average_grade"])
+
     # HTML-шаблон
-    template = Template("""
+    template = Template(
+        """
     <!DOCTYPE html>
     <html lang="ru">
     <head>
@@ -69,45 +75,47 @@ def generate_student_report(df: pd.DataFrame, student_id: int, output_path: str 
            Низкий - {{ class_stats.risk_distribution.low }}</p>
     </body>
     </html>
-    """)
-    
+    """
+    )
+
     # Определение текста риска с локализацией
     risk_texts = {
         "high": get_text("risk_high"),
         "medium": get_text("risk_medium"),
-        "low": get_text("risk_low")
+        "low": get_text("risk_low"),
     }
-    
+
     # Генерация HTML
     html_content = template.render(
         title=get_text("report_title"),
         student_id=student_id,
-        average_grade=performance['average_grade'],
-        attendance=performance['average_attendance'],
-        weak_subjects=performance['weak_subjects'],
-        risk_level=performance['risk_level'],
-        risk_text=risk_texts[performance['risk_level']],
+        average_grade=performance["average_grade"],
+        attendance=performance["average_attendance"],
+        weak_subjects=performance["weak_subjects"],
+        risk_level=performance["risk_level"],
+        risk_text=risk_texts[performance["risk_level"]],
         recommendations=recommendations,
-        class_stats=class_stats
+        class_stats=class_stats,
     )
-    
+
     # Сохранение отчета
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    with open(output_path, 'w', encoding='utf-8') as f:
+    with open(output_path, "w", encoding="utf-8") as f:
         f.write(html_content)
+
 
 def _generate_grade_chart(df: pd.DataFrame, student_id: int, avg_grade: float):
     """Генерирует график успеваемости для отчета"""
-    student_data = df[df['student_id'] == student_id]
-    
+    student_data = df[df["student_id"] == student_id]
+
     plt.figure(figsize=(10, 6))
-    plt.bar(student_data['subject'], student_data['grade'], color='skyblue')
-    plt.axhline(y=avg_grade, color='r', linestyle='--', label=f'Среднее: {avg_grade}')
-    plt.title('Успеваемость по предметам')
-    plt.xlabel('Предметы')
-    plt.ylabel('Оценки')
+    plt.bar(student_data["subject"], student_data["grade"], color="skyblue")
+    plt.axhline(y=avg_grade, color="r", linestyle="--", label=f"Среднее: {avg_grade}")
+    plt.title("Успеваемость по предметам")
+    plt.xlabel("Предметы")
+    plt.ylabel("Оценки")
     plt.ylim(0, 100)
     plt.legend()
     plt.tight_layout()
-    plt.savefig('docs/grade_chart.png')
+    plt.savefig("docs/grade_chart.png")
     plt.close()

@@ -18,4 +18,4 @@ ENV PYTHONPATH=/app
 
 ENV MPLBACKEND=Agg
 
-CMD ["python", "scripts/generate_daily_report.py"]
+CMD ["python", "scripts/generate_daily_report.py"]docker build -t student-analyzer .

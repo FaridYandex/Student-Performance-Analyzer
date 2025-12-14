@@ -23,59 +23,58 @@ def generate_student_report(
 
     # HTML-шаблон
     template = Template(
-        """
-    <!DOCTYPE html>
-    <html lang="ru">
-    <head>
-        <meta charset="UTF-8">
-        <title>Отчет по успеваемости</title>
-        <style>
-            body { font-family: Arial, sans-serif; margin: 40px; }
-            .chart { text-align: center; margin: 30px 0; }
-            .recommendations { background-color: #f0f8ff; padding: 20px; border-radius: 8px; }
-            .risk-high { color: #dc3545; font-weight: bold; }
-            .risk-medium { color: #ffc107; font-weight: bold; }
-            .risk-low { color: #28a745; font-weight: bold; }
-        </style>
-    </head>
-    <body>
-        <h1>{{ title }}</h1>
-        <p><strong>Студент ID:</strong> {{ student_id }}</p>
-        <p><strong>Средний балл:</strong> {{ average_grade }} / 100</p>
-        <p><strong>Посещаемость:</strong> {{ attendance }}%</p>
-        
-        <div class="chart">
-            <img src="grade_chart.png" alt="График успеваемости" width="600">
-        </div>
-        
-        <h2>Слабые предметы:</h2>
+        """<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Отчет по успеваемости</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .chart { text-align: center; margin: 30px 0; }
+        .recommendations { background-color: #f0f8ff; padding: 20px; border-radius: 8px; }
+        .risk-high { color: #dc3545; font-weight: bold; }
+        .risk-medium { color: #ffc107; font-weight: bold; }
+        .risk-low { color: #28a745; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>{{ title }}</h1>
+    <p><strong>Студент ID:</strong> {{ student_id }}</p>
+    <p><strong>Средний балл:</strong> {{ average_grade }} / 100</p>
+    <p><strong>Посещаемость:</strong> {{ attendance }}%</p>
+    
+    <div class="chart">
+        <img src="grade_chart.png" alt="График успеваемости" width="600">
+    </div>
+    
+    <h2>Слабые предметы:</h2>
+    <ul>
+        {% for subject in weak_subjects %}
+            <li>{{ subject }}</li>
+        {% endfor %}
+    </ul>
+    
+    <h2>Уровень риска отчисления:</h2>
+    <p class="risk-{{ risk_level }}">{{ risk_text }}</p>
+    
+    <div class="recommendations">
+        <h2>Рекомендуемые материалы:</h2>
         <ul>
-            {% for subject in weak_subjects %}
-                <li>{{ subject }}</li>
+            {% for rec in recommendations %}
+                <li><a href="{{ rec.url }}" target="_blank">{{ rec.title }}</a> (Сложность: {{ rec.difficulty }})</li>
             {% endfor %}
         </ul>
-        
-        <h2>Уровень риска отчисления:</h2>
-        <p class="risk-{{ risk_level }}">{{ risk_text }}</p>
-        
-        <div class="recommendations">
-            <h2>Рекомендуемые материалы:</h2>
-            <ul>
-                {% for rec in recommendations %}
-                    <li><a href="{{ rec.url }}" target="_blank">{{ rec.title }}</a> (Сложность: {{ rec.difficulty }})</li>
-                {% endfor %}
-            </ul>
-        </div>
-        
-        <h2>Статистика по классу:</h2>
-        <p>Всего студентов: {{ class_stats.total_students }}</p>
-        <p>Средний балл по классу: {{ class_stats.average_class_grade }}</p>
-        <p>Распределение рисков: Высокий - {{ class_stats.risk_distribution.high }}, 
-           Средний - {{ class_stats.risk_distribution.medium }}, 
-           Низкий - {{ class_stats.risk_distribution.low }}</p>
-    </body>
-    </html>
-    """
+    </div>
+    
+    <h2>Статистика по классу:</h2>
+    <p>Всего студентов: {{ class_stats.total_students }}</p>
+    <p>Средний балл по классу: {{ class_stats.average_class_grade }}</p>
+    <p>Распределение рисков: Высокий - {{ class_stats.risk_distribution.high }},
+       Средний - {{ class_stats.risk_distribution.medium }},
+       Низкий - {{ class_stats.risk_distribution.low }}</p>
+</body>
+</html>
+"""
     )
 
     # Определение текста риска с локализацией
@@ -119,3 +118,4 @@ def _generate_grade_chart(df: pd.DataFrame, student_id: int, avg_grade: float):
     plt.tight_layout()
     plt.savefig("docs/grade_chart.png")
     plt.close()
+    

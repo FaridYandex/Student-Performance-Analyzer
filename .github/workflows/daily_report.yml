@@ -24,11 +24,12 @@ jobs:
           pip install -r requirements.txt
       
       - name: Generate Report
-        env:
-          APP_LANGUAGE: ru  # Генерируем отчет на русском
         run: |
           mkdir -p docs
           python scripts/generate_daily_report.py
+        env:
+          APP_LANGUAGE: ru
+          PYTHONPATH: .
       
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3

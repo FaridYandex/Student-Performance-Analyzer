@@ -36,7 +36,6 @@ def get_class_statistics(df: pd.DataFrame) -> Dict[str, Any]:
     highRisk = sum(1 for a in analyses if a["risk_level"] == "high")
     mediumRisk = sum(1 for a in analyses if a["risk_level"] == "medium")
     lowRisk = sum(1 for a in analyses if a["risk_level"] == "low")
-  
     return {
         "total_students": len(students),
         "average_class_grade": round(df["grade"].mean(), 2),

@@ -3,15 +3,16 @@ from src.utils.i18n import set_language, get_text, _load_translations
 
 def test_language_switching():
     """Тест переключения языков"""
-    # Проверяем английский
     set_language("en")
-    assert get_text("welcome_message") == "Welcome to the Student Performance Analyzer!"
-    
-    # Проверяем русский
+    assert get_text("welcome_message") == (
+        "Welcome to the Student Performance Analyzer!"
+    )
+
     set_language("ru")
-    assert get_text("welcome_message") == "Добро пожаловать в систему анализа успеваемости!"
-    
-    # Проверяем обработку отсутствующего ключа
+    assert get_text("welcome_message") == (
+        "Добро пожаловать в систему анализа успеваемости!"
+    )
+
     assert "MISSING" in get_text("non_existent_key")
 
 

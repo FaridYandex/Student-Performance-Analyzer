@@ -23,58 +23,57 @@ def generate_student_report(
 
     # HTML-шаблон
     template = Template(
-        """<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Отчет по успеваемости</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        .chart { text-align: center; margin: 30px 0; }
-        .recommendations { background-color: #f0f8ff; padding: 20px; border-radius: 8px; }
-        .risk-high { color: #dc3545; font-weight: bold; }
-        .risk-medium { color: #ffc107; font-weight: bold; }
-        .risk-low { color: #28a745; font-weight: bold; }
-    </style>
-</head>
-<body>
-    <h1>{{ title }}</h1>
-    <p><strong>Студент ID:</strong> {{ student_id }}</p>
-    <p><strong>Средний балл:</strong> {{ average_grade }} / 100</p>
-    <p><strong>Посещаемость:</strong> {{ attendance }}%</p>
-    
-    <div class="chart">
-        <img src="grade_chart.png" alt="График успеваемости" width="600">
-    </div>
-    
-    <h2>Слабые предметы:</h2>
-    <ul>
-        {% for subject in weak_subjects %}
-            <li>{{ subject }}</li>
-        {% endfor %}
-    </ul>
-    
-    <h2>Уровень риска отчисления:</h2>
-    <p class="risk-{{ risk_level }}">{{ risk_text }}</p>
-    
-    <div class="recommendations">
-        <h2>Рекомендуемые материалы:</h2>
-        <ul>
-            {% for rec in recommendations %}
-                <li><a href="{{ rec.url }}" target="_blank">{{ rec.title }}</a> (Сложность: {{ rec.difficulty }})</li>
-            {% endfor %}
-        </ul>
-    </div>
-    
-    <h2>Статистика по классу:</h2>
-    <p>Всего студентов: {{ class_stats.total_students }}</p>
-    <p>Средний балл по классу: {{ class_stats.average_class_grade }}</p>
-    <p>Распределение рисков: Высокий - {{ class_stats.risk_distribution.high }},
-       Средний - {{ class_stats.risk_distribution.medium }},
-       Низкий - {{ class_stats.risk_distribution.low }}</p>
-</body>
-</html>
-"""
+        "<!DOCTYPE html>\n"
+        "<html lang=\"ru\">\n"
+        "<head>\n"
+        "    <meta charset=\"UTF-8\">\n"
+        "    <title>Отчет по успеваемости</title>\n"
+        "    <style>\n"
+        "        body { font-family: Arial, sans-serif; margin: 40px; }\n"
+        "        .chart { text-align: center; margin: 30px 0; }\n"
+        "        .recommendations { background-color: #f0f8ff; padding: 20px; border-radius: 8px; }\n"
+        "        .risk-high { color: #dc3545; font-weight: bold; }\n"
+        "        .risk-medium { color: #ffc107; font-weight: bold; }\n"
+        "        .risk-low { color: #28a745; font-weight: bold; }\n"
+        "    </style>\n"
+        "</head>\n"
+        "<body>\n"
+        "    <h1>{{ title }}</h1>\n"
+        "    <p><strong>Студент ID:</strong> {{ student_id }}</p>\n"
+        "    <p><strong>Средний балл:</strong> {{ average_grade }} / 100</p>\n"
+        "    <p><strong>Посещаемость:</strong> {{ attendance }}%</p>\n"
+        "    \n"
+        "    <div class=\"chart\">\n"
+        "        <img src=\"grade_chart.png\" alt=\"График успеваемости\" width=\"600\">\n"
+        "    </div>\n"
+        "    \n"
+        "    <h2>Слабые предметы:</h2>\n"
+        "    <ul>\n"
+        "        {% for subject in weak_subjects %}\n"
+        "            <li>{{ subject }}</li>\n"
+        "        {% endfor %}\n"
+        "    </ul>\n"
+        "    \n"
+        "    <h2>Уровень риска отчисления:</h2>\n"
+        "    <p class=\"risk-{{ risk_level }}\">{{ risk_text }}</p>\n"
+        "    \n"
+        "    <div class=\"recommendations\">\n"
+        "        <h2>Рекомендуемые материалы:</h2>\n"
+        "        <ul>\n"
+        "            {% for rec in recommendations %}\n"
+        "                <li><a href=\"{{ rec.url }}\" target=\"_blank\">{{ rec.title }}</a> (Сложность: {{ rec.difficulty }})</li>\n"
+        "            {% endfor %}\n"
+        "        </ul>\n"
+        "    </div>\n"
+        "    \n"
+        "    <h2>Статистика по классу:</h2>\n"
+        "    <p>Всего студентов: {{ class_stats.total_students }}</p>\n"
+        "    <p>Средний балл по классу: {{ class_stats.average_class_grade }}</p>\n"
+        "    <p>Распределение рисков: Высокий - {{ class_stats.risk_distribution.high }},\n"
+        "       Средний - {{ class_stats.risk_distribution.medium }},\n"
+        "       Низкий - {{ class_stats.risk_distribution.low }}</p>\n"
+        "</body>\n"
+        "</html>"
     )
 
     # Определение текста риска с локализацией
